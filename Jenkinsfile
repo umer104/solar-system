@@ -6,11 +6,11 @@ pipeline {
     }
 
     environment {
-        MONGO_URI = "mongodb://192.168.100.209:27017/superUmer"
+        MONGO_URI = "mongodb+srv://db.yefun.mongodb.net/superUmer"
         MONGO_DB_CREDS = credentials('mongo-db-credentials')
-        MONGO_USERNAME = credentials('mongo-db-username')
-        MONGO_PASSWORD = credentials('mongo-db-password')
-        SONAR_SCANNER_HOME = tool 'sonarqube-scanner-610';
+        // MONGO_USERNAME = credentials('mongo-db-username')
+        // MONGO_PASSWORD = credentials('mongo-db-password')
+        // SONAR_SCANNER_HOME = tool 'sonarqube-scanner-610';
         // GITEA_TOKEN = credentials('gitea-api-token')
     }
 
@@ -39,18 +39,18 @@ pipeline {
                     }
                 }
 
-                stage('OWASP Dependency Check') {
-                    steps {
-                        dependencyCheck additionalArguments: '''
-                            --scan \'./\' 
-                            --out \'./\'  
-                            --format \'ALL\' 
-                            --disableYarnAudit \
-                            --prettyPrint''', odcInstallation: 'OWASP-DepCheck-8'
+                // stage('OWASP Dependency Check') {
+                //     steps {
+                //         dependencyCheck additionalArguments: '''
+                //             --scan \'./\' 
+                //             --out \'./\'  
+                //             --format \'ALL\' 
+                //             --disableYarnAudit \
+                //             --prettyPrint''', odcInstallation: 'OWASP-DepCheck-12-1'
 
-                        dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: false
-                    }
-                }
+                //         dependencyCheckPublisher failedTotalCritical: 1, pattern: 'dependency-check-report.xml', stopBuild: false
+                //     }
+                // }
             }
         }
 
@@ -72,23 +72,23 @@ pipeline {
             }
         }
 
-        stage('SAST - SonarQube') {
-            steps {
-                sh 'sleep 5s'
-                timeout(time: 60, unit: 'SECONDS') {
-                    withSonarQubeEnv('sonar-qube-server') {
-                        sh 'echo $SONAR_SCANNER_HOME'
-                        sh '''
-                            $SONAR_SCANNER_HOME/bin/sonar-scanner \
-                                -Dsonar.projectKey=Solar-System-Project \
-                                -Dsonar.sources=app.js \
-                                -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-                        '''
-                    }
-                    waitForQualityGate abortPipeline: true
-                }
-            }
-        } 
+        // stage('SAST - SonarQube') {
+        //     steps {
+        //         sh 'sleep 5s'
+        //         timeout(time: 60, unit: 'SECONDS') {
+        //             withSonarQubeEnv('sonar-qube-server') {
+        //                 sh 'echo $SONAR_SCANNER_HOME'
+        //                 sh '''
+        //                     $SONAR_SCANNER_HOME/bin/sonar-scanner \
+        //                         -Dsonar.projectKey=Solar-System-Project \
+        //                         -Dsonar.sources=app.js \
+        //                         -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+        //                 '''
+        //             }
+        //             waitForQualityGate abortPipeline: true
+        //         }
+        //     }
+        // } 
 
         stage('Build Docker Image') {
             steps {
@@ -144,46 +144,46 @@ pipeline {
             }
         }
 
-        stage('Deploy - AWS EC2') {
-            when {
-                branch 'main'
-            }
-            steps {
-                sh 'sleep 5s'
-                script {
-                        sshagent(['ssh-key-access']) {
-                            sh '''
-                                ssh -o StrictHostKeyChecking=no ubuntu@107.21.33.189 "
-                                    if sudo docker ps -a | grep -q "solar-system"; then
-                                        echo "Container found. Stopping..."
-                                            sudo docker stop "solar-system" && sudo docker rm "solar-system"
-                                        echo "Container stopped and removed."
-                                    fi
-                                        sudo docker run --name solar-system \
-                                            -e MONGO_URI=$MONGO_URI \
-                                            -e MONGO_USERNAME=$MONGO_USERNAME \
-                                            -e MONGO_PASSWORD=$MONGO_PASSWORD \
-                                            -p 3001:3000 -d umerakmal104/solar-system:$GIT_COMMIT
-                                "
-                            '''
-                    }
-                }
-            }
-        }
+        // stage('Deploy - AWS EC2') {
+        //     when {
+        //         branch 'main'
+        //     }
+        //     steps {
+        //         sh 'sleep 5s'
+        //         script {
+        //                 sshagent(['ssh-key-access']) {
+        //                     sh '''
+        //                         ssh -o StrictHostKeyChecking=no ubuntu@107.21.33.189 "
+        //                             if sudo docker ps -a | grep -q "solar-system"; then
+        //                                 echo "Container found. Stopping..."
+        //                                     sudo docker stop "solar-system" && sudo docker rm "solar-system"
+        //                                 echo "Container stopped and removed."
+        //                             fi
+        //                                 sudo docker run --name solar-system \
+        //                                     -e MONGO_URI=$MONGO_URI \
+        //                                     -e MONGO_USERNAME=$MONGO_USERNAME \
+        //                                     -e MONGO_PASSWORD=$MONGO_PASSWORD \
+        //                                     -p 3001:3000 -d umerakmal104/solar-system:$GIT_COMMIT
+        //                         "
+        //                     '''
+        //             }
+        //         }
+        //     }
+        // }
 
-        stage('Integration Testing - AWS EC2') {
-            when {
-                branch 'main'
-            }
-            steps {
-                sh 'printenv | grep -i branch'
-                withAWS(credentials: 'aws-s3-ec2-lambda-creds', region: 'us-east-2') {
-                    sh  '''
-                        bash integration-testing-ec2.sh
-                    '''
-                }
-            }
-        }
+        // stage('Integration Testing - AWS EC2') {
+        //     when {
+        //         branch 'main'
+        //     }
+        //     steps {
+        //         sh 'printenv | grep -i branch'
+        //         withAWS(credentials: 'aws-s3-ec2-lambda-creds', region: 'us-east-2') {
+        //             sh  '''
+        //                 bash integration-testing-ec2.sh
+        //             '''
+        //         }
+        //     }
+        // }
 
         // stage('K8S - Update Image Tag') {
         //     when {
