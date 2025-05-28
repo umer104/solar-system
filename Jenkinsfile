@@ -10,7 +10,7 @@ pipeline {
         MONGO_DB_CREDS = credentials('mongo-db-credentials')
         MONGO_USERNAME = credentials('mongo-db-username')
         MONGO_PASSWORD = credentials('mongo-db-password')
-        // SONAR_SCANNER_HOME = tool 'sonarqube-scanner-610';
+        SONAR_SCANNER_HOME = tool 'sonarqube-scanner-610';
         // GITEA_TOKEN = credentials('gitea-api-token')
     }
 
@@ -72,23 +72,23 @@ pipeline {
             }
         }
 
-        // stage('SAST - SonarQube') {
-        //     steps {
-        //         sh 'sleep 5s'
-        //         timeout(time: 60, unit: 'SECONDS') {
-        //             withSonarQubeEnv('sonar-qube-server') {
-        //                 sh 'echo $SONAR_SCANNER_HOME'
-        //                 sh '''
-        //                     $SONAR_SCANNER_HOME/bin/sonar-scanner \
-        //                         -Dsonar.projectKey=Solar-System-Project \
-        //                         -Dsonar.sources=app.js \
-        //                         -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
-        //                 '''
-        //             }
-        //             waitForQualityGate abortPipeline: true
-        //         }
-        //     }
-        // } 
+        stage('SAST - SonarQube') {
+            steps {
+                sh 'sleep 5s'
+                timeout(time: 60, unit: 'SECONDS') {
+                    withSonarQubeEnv('sonar-qube-server') {
+                        sh 'echo $SONAR_SCANNER_HOME'
+                        sh '''
+                            $SONAR_SCANNER_HOME/bin/sonar-scanner \
+                                -Dsonar.projectKey=Solar-System-Project \
+                                -Dsonar.sources=app.js \
+                                -Dsonar.javascript.lcov.reportPaths=./coverage/lcov.info
+                        '''
+                    }
+                    waitForQualityGate abortPipeline: true
+                }
+            }
+        } 
 
         stage('Build Docker Image') {
             steps {
@@ -163,7 +163,7 @@ pipeline {
         //                                     -e MONGO_URI=$MONGO_URI \
         //                                     -e MONGO_USERNAME=$MONGO_USERNAME \
         //                                     -e MONGO_PASSWORD=$MONGO_PASSWORD \
-        //                                     -p 3001:3000 -d umerakmal104/solar-system:$GIT_COMMIT
+        //                                     -p 3000:3000 -d umerakmal104/solar-system:$GIT_COMMIT
         //                         "
         //                     '''
         //             }
