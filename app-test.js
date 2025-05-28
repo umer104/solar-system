@@ -130,22 +130,6 @@ describe('Planets API Suite', () => {
               });
         });
 
-        // it('it should fetch a planet named Pluto', (done) => {
-        //     let payload = {
-        //         id: 9
-        //     }
-        //   chai.request(server)
-        //       .post('/planet')
-        //       .send(payload)
-        //       .end((err, res) => {
-        //             res.should.have.status(200);
-        //             res.body.should.have.property('id').eql(9);
-        //             res.body.should.have.property('name').eql('Sun');
-        //         done();
-        //       });
-        // });
-
-
     });        
 });
 
@@ -184,6 +168,17 @@ describe('Testing Other Endpoints', () => {
                     res.body.should.have.property('status').eql('ready');
                 done();
               });
+        });
+    });
+
+    describe('it should fetch API Docs', () => {
+    it('it checks /api-docs endpoint', (done) => {
+      chai.request(server)
+          .get('/api-docs')
+          .end((err, res) => {
+                res.should.have.status(200);
+            done();
+            });
         });
     });
 
