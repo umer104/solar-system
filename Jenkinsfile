@@ -14,10 +14,10 @@ pipeline {
         // GITEA_TOKEN = credentials('gitea-api-token')
     }
 
-    // options {
-    //     disableResume()
-    //     disableConcurrentBuilds abortPrevious: true
-    // }
+    options {
+        disableResume()
+        disableConcurrentBuilds abortPrevious: true
+    }
 
     stages {
         stage('Installing Dependencies') {
