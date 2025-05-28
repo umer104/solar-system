@@ -8,8 +8,8 @@ pipeline {
     environment {
         MONGO_URI = "mongodb+srv://db.yefun.mongodb.net/superUmer"
         MONGO_DB_CREDS = credentials('mongo-db-credentials')
-        // MONGO_USERNAME = credentials('mongo-db-username')
-        // MONGO_PASSWORD = credentials('mongo-db-password')
+        MONGO_USERNAME = credentials('mongo-db-username')
+        MONGO_PASSWORD = credentials('mongo-db-password')
         // SONAR_SCANNER_HOME = tool 'sonarqube-scanner-610';
         // GITEA_TOKEN = credentials('gitea-api-token')
     }
