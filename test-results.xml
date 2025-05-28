@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuites name="Mocha Tests" time="0.186" tests="11" failures="0">
+  <testsuite name="Root Suite" timestamp="2025-03-06T09:26:01" tests="0" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Planets API Suite" timestamp="2025-03-06T09:26:01" tests="0" file="/home/muhammadumer/solar-system-gitea-jenkins-advanced/app-test.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="Fetching Planet Details" timestamp="2025-03-06T09:26:01" tests="8" file="/home/muhammadumer/solar-system-gitea-jenkins-advanced/app-test.js" time="0.170" failures="0">
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Mercury" time="0.111" classname="it should fetch a planet named Mercury">
+    </testcase>
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Venus" time="0.010" classname="it should fetch a planet named Venus">
+    </testcase>
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Earth" time="0.009" classname="it should fetch a planet named Earth">
+    </testcase>
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Mars" time="0.007" classname="it should fetch a planet named Mars">
+    </testcase>
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Jupiter" time="0.007" classname="it should fetch a planet named Jupiter">
+    </testcase>
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Satrun" time="0.006" classname="it should fetch a planet named Satrun">
+    </testcase>
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Uranus" time="0.005" classname="it should fetch a planet named Uranus">
+    </testcase>
+    <testcase name="Planets API Suite Fetching Planet Details it should fetch a planet named Neptune" time="0.007" classname="it should fetch a planet named Neptune">
+    </testcase>
+  </testsuite>
+  <testsuite name="Testing Other Endpoints" timestamp="2025-03-06T09:26:01" tests="0" file="/home/muhammadumer/solar-system-gitea-jenkins-advanced/app-test.js" time="0.000" failures="0">
+  </testsuite>
+  <testsuite name="it should fetch OS Details" timestamp="2025-03-06T09:26:01" tests="1" file="/home/muhammadumer/solar-system-gitea-jenkins-advanced/app-test.js" time="0.006" failures="0">
+    <testcase name="Testing Other Endpoints it should fetch OS Details it should fetch OS details" time="0.005" classname="it should fetch OS details">
+    </testcase>
+  </testsuite>
+  <testsuite name="it should fetch Live Status" timestamp="2025-03-06T09:26:01" tests="1" file="/home/muhammadumer/solar-system-gitea-jenkins-advanced/app-test.js" time="0.003" failures="0">
+    <testcase name="Testing Other Endpoints it should fetch Live Status it checks Liveness endpoint" time="0.003" classname="it checks Liveness endpoint">
+    </testcase>
+  </testsuite>
+  <testsuite name="it should fetch Ready Status" timestamp="2025-03-06T09:26:01" tests="1" file="/home/muhammadumer/solar-system-gitea-jenkins-advanced/app-test.js" time="0.003" failures="0">
+    <testcase name="Testing Other Endpoints it should fetch Ready Status it checks Readiness endpoint" time="0.003" classname="it checks Readiness endpoint">
+    </testcase>
+  </testsuite>
+</testsuites>
