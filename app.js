@@ -26,9 +26,9 @@ mongoose.connect(process.env.MONGO_URI, {
     }
 })
 
-var Schema = mongoose.Schema;
+let Schema = mongoose.Schema;
 
-var dataSchema = new Schema({
+let dataSchema = new Schema({
     name: String,
     id: Number,
     description: String,
@@ -36,7 +36,7 @@ var dataSchema = new Schema({
     velocity: String,
     distance: String
 });
-var planetModel = mongoose.model('planets', dataSchema);
+let planetModel = mongoose.model('planets', dataSchema);
 
 
 
