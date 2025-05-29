@@ -145,9 +145,9 @@ pipeline {
         }
 
         stage('Deploy - AWS EC2') {
-            when {
-                branch 'main'
-            }
+            // when {
+            //     branch 'main'
+            // }
             steps {
                 sh 'sleep 5s'
                 script {
@@ -172,9 +172,9 @@ pipeline {
         }
 
         stage('Integration Testing - AWS EC2') {
-            when {
-                branch 'main'
-            }
+            // when {
+            //     branch 'main'
+            // }
             steps {
                 sh 'printenv | grep -i branch'
                 withAWS(credentials: 'aws-s3-ec2-lambda-creds', region: 'us-east-2') {
