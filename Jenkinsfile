@@ -75,7 +75,7 @@ pipeline {
         stage('SAST - SonarQube') {
             steps {
                 sh 'sleep 5s'
-                timeout(time: 180, unit: 'SECONDS') {
+                timeout(time: 10, unit: 'MINUTES') {
                     withSonarQubeEnv('sonar-qube-server') {
                         sh 'echo $SONAR_SCANNER_HOME'
                         sh '''
