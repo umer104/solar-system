@@ -153,7 +153,7 @@ pipeline {
                 script {
                         sshagent(['ssh-key-access']) {
                             sh '''
-                                ssh -o StrictHostKeyChecking=no ubuntu@54.197.137.139 "
+                                ssh -o StrictHostKeyChecking=no ubuntu@18.215.183.107 "
                                     if sudo docker ps -a | grep -q "solar-system"; then
                                         echo "Container found. Stopping..."
                                             sudo docker stop "solar-system" && sudo docker rm "solar-system"
@@ -357,13 +357,13 @@ pipeline {
         // }
     }
 
-    // post {
-    //     always {
-    //         // script {
-    //         //     if (fileExists('solar-system-gitops-argocd')) {
-    //         //         sh 'rm -rf solar-system-gitops-argocd'
-    //         //     }
-    //         // }
+    post {
+        always {
+            script {
+                if (fileExists('solar-system-gitops-argocd')) {
+                    sh 'rm -rf solar-system-gitops-argocd'
+                }
+            }
 
     //         // junit allowEmptyResults: true, stdioRetention: '', testResults: 'test-results.xml'
     //         // junit allowEmptyResults: true, stdioRetention: '', testResults: 'dependency-check-junit.xml' 
@@ -379,6 +379,6 @@ pipeline {
     //         // publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: './', reportFiles: 'dependency-check-jenkins.html', reportName: 'Dependency Check HTML Report', reportTitles: '', useWrapperFileDirectly: true])
 
     //         publishHTML([allowMissing: true, alwaysLinkToLastBuild: true, keepAll: true, reportDir: 'coverage/lcov-report', reportFiles: 'index.html', reportName: 'Code Coverage HTML Report', reportTitles: '', useWrapperFileDirectly: true])
-    //     }
-    // }
+        }
+    }
 }
