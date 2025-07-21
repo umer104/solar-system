@@ -187,7 +187,7 @@ pipeline {
 
         stage('K8S - Update Image Tag') {
             when {
-                branch 'PR*'
+                branch 'main'
             }
             steps {
                 sh 'git clone -b main https://github.com/umer104/solar-system-argocd'
