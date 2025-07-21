@@ -185,30 +185,30 @@ pipeline {
             }
         }
 
-        // stage('K8S - Update Image Tag') {
-        //     when {
-        //         branch 'PR*'
-        //     }
-        //     steps {
-        //         sh 'git clone -b main http://64.227.187.25:5555/dasher-org/solar-system-gitops-argocd'
-        //         dir("solar-system-gitops-argocd/kubernetes") {
-        //             sh '''
-        //                 #### Replace Docker Tag ####
-        //                 git checkout main
-        //                 git checkout -b feature-$BUILD_ID
-        //                 sed -i "s#siddharth67.*#siddharth67/solar-system:$GIT_COMMIT#g" deployment.yml
-        //                 cat deployment.yml
+        stage('K8S - Update Image Tag') {
+            when {
+                branch 'PR*'
+            }
+            steps {
+                sh 'git clone -b main https://github.com/umer104/solar-system-argocd'
+                dir("solar-system-argocd/kubernetes") {
+                    sh '''
+                        #### Replace Docker Tag ####
+                        git checkout main
+                        git checkout -b feature-$BUILD_ID
+                        sed -i "s#umerakmal104.*#umerakmal104/solar-system:$GIT_COMMIT#g" deployment.yml
+                        cat deployment.yml
                         
-        //                 #### Commit and Push to Feature Branch ####
-        //                 git config --global user.email "jenkins@dasher.com"
-        //                 git remote set-url origin http://$GITEA_TOKEN@64.227.187.25:5555/dasher-org/solar-system-gitops-argocd
-        //                 git add .
-        //                 git commit -am "Updated docker image"
-        //                 git push -u origin feature-$BUILD_ID
-        //             '''
-        //         }
-        //     }
-        // }
+                        #### Commit and Push to Feature Branch ####
+                        git config --global user.email "umerakmalku@gmail.com"
+                        git remote set-url origin https://github.com/umer104/solar-system-argocd
+                        git add .
+                        git commit -am "Updated docker image"
+                        git push -u origin feature-$BUILD_ID
+                    '''
+                }
+            }
+        }
 
         // stage('K8S - Raise PR') {
         //     when {
