@@ -75,7 +75,7 @@ pipeline {
         stage('SAST - SonarQube') {
             steps {
                 sh 'sleep 5s'
-                timeout(time: 60, unit: 'SECONDS') {
+                timeout(time: 180, unit: 'SECONDS') {
                     withSonarQubeEnv('sonar-qube-server') {
                         sh 'echo $SONAR_SCANNER_HOME'
                         sh '''
@@ -153,7 +153,7 @@ pipeline {
                 script {
                         sshagent(['ssh-key-access']) {
                             sh '''
-                                ssh -o StrictHostKeyChecking=no ubuntu@44.211.63.11 "
+                                ssh -o StrictHostKeyChecking=no ubuntu@54.197.137.139 "
                                     if sudo docker ps -a | grep -q "solar-system"; then
                                         echo "Container found. Stopping..."
                                             sudo docker stop "solar-system" && sudo docker rm "solar-system"
