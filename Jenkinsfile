@@ -193,13 +193,13 @@ pipeline {
                 sh 'git clone -b main https://github.com/umer104/solar-system-argocd'
                 dir("solar-system-argocd/kubernetes") {
                     sh '''
-                        #### Replace Docker Tag ####
+                        ### Replace Docker Tag ###
                         git checkout main
                         git checkout -b feature-$BUILD_ID
                         sed -i "s#umerakmal104.*#umerakmal104/solar-system:$GIT_COMMIT#g" deployment.yml
                         cat deployment.yml
                         
-                        #### Commit and Push to Feature Branch ####
+                        ### Commit and Push to Feature Branch ###
                         git config --global user.email "umerakmalku@gmail.com"
                         git remote set-url origin https://github.com/umer104/solar-system-argocd
                         git add .
